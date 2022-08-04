@@ -1,0 +1,10 @@
+.white{
+    width: 70px;
+    height: 70px;
+    background-color: rgb(228, 228, 228);
+}
+.black{
+    width: 70px;
+    height: 70px;
+    background-color: rgb(54, 53, 53);
+}
