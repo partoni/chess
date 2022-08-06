@@ -3,7 +3,7 @@ import React from "react";
 export const CellComponent = ({cell})=>{
     return(
         <div className="cell">
-            {/* {cell.figure?<img src={cell.figure.logo}/>:null} */}
+            {cell.figure?<img src={cell.figure.logo} alt=''/>:null}
         </div>
     )
 }

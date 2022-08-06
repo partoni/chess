@@ -10,8 +10,8 @@ export const BoardComponent = ({board,setBoard})=>{
                 {row.map((cell,ind)=>
                     
                     (ind+index)%2
-                    ?<div className='white'><CellComponent cell={cell} /></div>
-                    :<div className='black'><CellComponent cell={cell} /></div>
+                    ?<div className='white'><CellComponent key={cell.id} cell={cell} /></div>
+                    :<div className='black'><CellComponent key={cell.id} cell={cell} /></div>
                 )
                 }
                 </React.Fragment>)

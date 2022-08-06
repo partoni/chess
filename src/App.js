@@ -17,6 +17,10 @@ function App() {
     
     setBoard(newBoard)
   }
+  // function addFigurs(params) {
+  //   board.addFigurs()
+  //   setBoard()
+  // }
 
   return (
     <div className="App">
@@ -27,6 +31,7 @@ function App() {
         board = {board}
         setBoard={setBoard}/>
         </div>
+        <button>расставить</button>
       </header>
     </div>
   );
