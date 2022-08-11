@@ -1,0 +1,28 @@
+.cell{
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cell img{
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+.black{
+    
+    background-color: rgb(54, 53, 53);
+}
+.white{
+    background-color: rgb(224, 199, 190);
+}
+.selected{
+    background-color: rgb(145, 176, 232);
+}
+.marker{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: cornflowerblue;
+}

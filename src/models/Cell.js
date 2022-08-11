@@ -2,6 +2,7 @@ class Cell{
     x;
     y;
     figure;
+    available=false;
     id;
 
     constructor(x,y,figure,id){

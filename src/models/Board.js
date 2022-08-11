@@ -1,3 +1,4 @@
+
 import Cell from "./Cell";
 import Figure from "./Figure";
 import logoBishopBlack from "../logo/black-bishop.png";
@@ -63,6 +64,55 @@ class Board{
             }
         }
         // this.cell.map(cell=>cell.map(cell1=>cell1.figure=new Figure('bishop',"black",logo)))
+    }
+    getCopyBoard(){
+        const newBoard = new Board()
+        newBoard.cell = this.cell
+        return newBoard
+    }
+
+    highlightCells(cell){
+        console.log('---highlightCells---'+cell.figure.name);
+        switch (cell.figure.name) {
+            case "pawn":
+                
+                break;
+        
+            case "knight":
+                
+                break;
+        
+            case "king":
+                
+                break;
+        
+            case "bishop":
+                
+                break;
+        
+            case "queen":
+                
+                break;
+
+            case "rook":
+                console.log(this.cell);
+                this.cell = this.cell.map((row)=>row.map(oldCell=>{
+                    // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
+                    if(oldCell.x===cell.x||oldCell.y===cell.y){
+                        oldCell.available=true
+                    }
+                       return oldCell}
+                    ))
+                console.log(this.cell);
+            default:
+                    break;
+           
+    }}
+    deleteHighLight(){
+        this.cell = this.cell.map((row)=>row.map(oldCell=>{
+            oldCell.available=false
+            return oldCell}
+            ))
     }
 }
 export default Board
