@@ -25,7 +25,12 @@ export const BoardComponent = ({board,setBoard})=>{
                 {row.map((cell,ind)=>
                     
                     (ind+index)%2
-                    ?<CellComponent key={cell.id} collor="white" cell={cell} click={click} selected={selected?.x===cell.x&&selected?.y===cell.y}/>
+                    ?<CellComponent 
+                        key={cell.id} 
+                        collor="white" 
+                        cell={cell} 
+                        click={click} 
+                        selected={selected?.x===cell.x&&selected?.y===cell.y}/>
                     :<CellComponent key={cell.id} collor="black" cell={cell} click={click} selected={selected?.x===cell.x&&selected?.y===cell.y}/>
                 )
                 }

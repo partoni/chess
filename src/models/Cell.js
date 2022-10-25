@@ -12,7 +12,11 @@ class Cell{
         this.id = id
     }
     addFigure(newFigure){
-        this.figure=newFigure
+        if(newFigure.collor!==this.figure.collor){this.figure=newFigure}
+        
+    }
+    removeFigure(){
+        this.figure = null
     }
 }
 export default Cell
