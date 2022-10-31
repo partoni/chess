@@ -12,7 +12,9 @@ class Cell{
         this.id = id
     }
     addFigure(newFigure){
-        if(newFigure.collor!==this.figure.collor){this.figure=newFigure}
+        
+        this.figure=newFigure
+        // if(newFigure.collor!==this.figure.collor){this.figure=newFigure}
         
     }
     removeFigure(){

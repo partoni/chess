@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import style from "./CellComponent.module.css"
-export const CellComponent = ({cell,click,collor,selected})=>{
+export const CellComponent = ({cell,click,collor,selected,movement})=>{
    
     const onSelected = ()=>{
         
         click(cell)
     }
     function dragStartHandler(e,cell){
-        console.log("start"+JSON.stringify(cell));
+        console.log("start");
         click(cell)
     }
     function dragLeaveHandler(e){
@@ -21,8 +21,10 @@ export const CellComponent = ({cell,click,collor,selected})=>{
         console.log("over");
     }
     function dropHandler(e,cell){
-        console.log("drop",JSON.stringify(cell));
-        e.preventDefault()
+        console.log("drop")
+        
+        movement(cell)
+        // e.preventDefault()
     }
     // useEffect(()=>{},[selected])
     return(
@@ -34,7 +36,7 @@ export const CellComponent = ({cell,click,collor,selected})=>{
             onDragEnd={(e)=>dragEndHandler(e)}
             onDrop={(e)=>dropHandler(e,cell)}
             draggable={true}
-             onClick={onSelected}>
+            onDoubleClick={onSelected}>
             {cell.available?<div className={style.marker}></div>:null}
             {cell.figure
             ?<img src={cell.figure.logo} 

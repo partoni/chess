@@ -4,9 +4,9 @@ import "./BoardComponentStyle.css"
 
 export const BoardComponent = ({board,setBoard})=>{
     const [selected,setSelected] = useState(null)
-    console.log("---board---"+board);
+    console.log("---board---" );
     const click = (cell)=>{
-        console.log("---cklick-----");
+        console.log("---click-----");
         if(selected&&cell.x===selected.x&&cell.y===selected.y){
             setSelected(null)
             board.deleteHighLight()
@@ -18,20 +18,33 @@ export const BoardComponent = ({board,setBoard})=>{
         const newBoard = board.getCopyBoard()
         setBoard(newBoard)
     }
+    const movement=(defensingCell)=>{
+        click(selected)
+       board.figureReplacement(selected,defensingCell)
+       const newBoard = board.getCopyBoard()
+       console.log('=====defensingCell----')
+        setBoard(newBoard)
+    }
 
     return(
         <>
             {board.cell.map((row,index)=> <React.Fragment key={index}>
-                {row.map((cell,ind)=>
-                    
+                {row.map((cell,ind)=>                    
                     (ind+index)%2
                     ?<CellComponent 
                         key={cell.id} 
                         collor="white" 
                         cell={cell} 
-                        click={click} 
+                        click={click}
+                        movement={movement} 
                         selected={selected?.x===cell.x&&selected?.y===cell.y}/>
-                    :<CellComponent key={cell.id} collor="black" cell={cell} click={click} selected={selected?.x===cell.x&&selected?.y===cell.y}/>
+                    :<CellComponent
+                        key={cell.id}
+                        collor="black"
+                        cell={cell} 
+                        click={click}
+                        movement={movement}
+                        selected={selected?.x===cell.x&&selected?.y===cell.y}/>
                 )
                 }
                 </React.Fragment>)

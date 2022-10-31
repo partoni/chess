@@ -35,7 +35,7 @@ class Board{
         for(let i=0; i<this.cell.length;i++){
             let row = this.cell[i]
             if(i===0){
-                console.log('i=0'+JSON.stringify(this.cell[0][2]));
+                
                 for(let y=0;y<row.length;y++){
                     
                     if(y===0||y===7){this.cell[i][y].figure = new Figure("rook","black",logoRookBlack)}
@@ -72,7 +72,7 @@ class Board{
     }
 
     highlightCells(cell){
-        console.log('---highlightCells---'+cell.figure.name);
+        console.log('---highlightCells---');
         switch (cell.figure.name) {
             case "pawn":
                 
@@ -95,7 +95,7 @@ class Board{
                 break;
 
             case "rook":
-                console.log(this.cell);
+                console.log('---rook---');
                 this.cell = this.cell.map((row)=>row.map(oldCell=>{
                     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
                     if(oldCell.x===cell.x||oldCell.y===cell.y){
@@ -103,7 +103,7 @@ class Board{
                     }
                        return oldCell}
                     ))
-                console.log(this.cell);
+                
             default:
                     break;
            
@@ -113,6 +113,15 @@ class Board{
             oldCell.available=false
             return oldCell}
             ))
+    }
+    figureReplacement(attackingCell,defensingCell){
+        console.log("---figureReplacement---")        
+        this.cell[defensingCell.x][defensingCell.y].removeFigure()        
+        this.cell[defensingCell.x][defensingCell.y].addFigure(attackingCell.figure)
+        this.cell[attackingCell.x][attackingCell.y].removeFigure()
+        
+        // this.cell.map((row,ind)=>row.map((cell,index)=>
+        // if(row.x=cell)))
     }
 }
 export default Board
