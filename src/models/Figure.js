@@ -1,15 +1,15 @@
 class Figure{
     name;
-    color;
+    collor;
     logo;
-    constructor(name,color,logo){
+    constructor(name,collor,logo){
         this.name=name
-        this.color=color
+        this.collor=collor
         this.logo=logo
     }
 
     canMove(cell){
-        if(cell.figure.color===this.color){
+        if(cell.figure.collor===this.collor){
             return false
         }
         return true

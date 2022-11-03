@@ -20,5 +20,6 @@ class Cell{
     removeFigure(){
         this.figure = null
     }
+    
 }
 export default Cell
