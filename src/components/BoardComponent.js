@@ -19,8 +19,10 @@ export const BoardComponent = ({ board, setBoard }) => {
         setBoard(newBoard)
     }
     const movement = (defensingCell) => {
-        click(selected)
+        
         board.figureReplacement(selected, defensingCell)
+        setSelected(null)
+        board.deleteHighLight()
         const newBoard = board.getCopyBoard()
         console.log('=====defensingCell----')
 

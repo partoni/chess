@@ -70,85 +70,117 @@ class Board {
         newBoard.cells = this.cells
         return newBoard
     }
-    isEmptyVertical(cell){
-        console.log('---isEmptyVertical down---'+JSON.stringify(cell.figure) )
-        
-        for(let x=cell.x+1;x<=7;x++){
-           console.log('this.cells----'+JSON.stringify(this.cells[x][cell.y]));
-           console.log('cell---'+JSON.stringify(cell.figure));
-            if(!this.cells[x][cell.y].figure){
-                this.cells[x][cell.y].available=true
-            
-            }else if(this.cells[x][cell.y].figure.collor!==cell.figure.collor){
-                console.log(this.cells[x][cell.y].figure)
-                this.cells[x][cell.y].available=true
-                break;
-            }else if(this.cells[x][cell.y].figure.collor===cell.figure.collor){
-                break;
-            }
-            
-        }
-        for(let x=cell.x-1;x>=0;x--){
-            console.log('---isEmptyVertical up---'+JSON.stringify(cell.figure) )
-            console.log(this.cells[x][cell.y])
-            console.log(`${this.cells[x][cell.y].figure}---${cell.figure.collor}`);
+    isEmptyVertical(cell) {
+        console.log('---isEmptyVertical down---')
 
-            if(!this.cells[x][cell.y].figure){
-                this.cells[x][cell.y].available=true
-            
-            }else if(this.cells[x][cell.y].figure.collor!==cell.figure.collor){
+        for (let x = cell.x + 1; x <= 7; x++) {
+
+
+            if (!this.cells[x][cell.y].figure) {
+                this.cells[x][cell.y].available = true
+
+            } else if (this.cells[x][cell.y].figure.collor !== cell.figure.collor) {
                 console.log(this.cells[x][cell.y].figure)
-                this.cells[x][cell.y].available=true
+                this.cells[x][cell.y].available = true
+                break;
+            } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
+                break;
+            }
+
+        }
+        for (let x = cell.x - 1; x >= 0; x--) {
+            console.log('---isEmptyVertical up---')
+
+            if (!this.cells[x][cell.y].figure) {
+                this.cells[x][cell.y].available = true
+
+            } else if (this.cells[x][cell.y].figure.collor !== cell.figure.collor) {
+                console.log(this.cells[x][cell.y].figure)
+                this.cells[x][cell.y].available = true
                 return
-            }else if(this.cells[x][cell.y].figure.collor===cell.figure.collor){
+            } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
                 return
             }
-            
+
         }
     }
 
-    isEmptyGorisontal(cell){
+    isEmptyGorisontal(cell) {
         console.log('---isEmptyGorisontal')
 
-        for(let y=cell.y+1;y<=7;y++){
-          
-            if(!this.cells[cell.x][y].figure){
-                this.cells[cell.x][y].available=true
-            
+        for (let y = cell.y + 1; y <= 7; y++) {
 
-            }else if(this.cells[cell.x][y].figure.collor!==cell.figure.collor){
-                this.cells[cell.x][y].available=true
+            if (!this.cells[cell.x][y].figure) {
+                this.cells[cell.x][y].available = true
+
+
+            } else if (this.cells[cell.x][y].figure.collor !== cell.figure.collor) {
+                this.cells[cell.x][y].available = true
                 break
-            }else if(this.cells[cell.x][y].figure.collor===cell.figure.collor){
+            } else if (this.cells[cell.x][y].figure.collor === cell.figure.collor) {
                 break
             }
         }
-        for(let y=cell.y-1;y>=0;y--){
-            console.log('---isEmptyGorisontal---'+this.cells[cell.x][y].figure)
-            if(!this.cells[cell.x][y].figure){
-                this.cells[cell.x][y].available=true
-            
-            }else if(this.cells[cell.x][y].figure.collor!==cell.figure.collor){
-                this.cells[cell.x][y].available=true
+        for (let y = cell.y - 1; y >= 0; y--) {
+            console.log('---isEmptyGorisontal---')
+            if (!this.cells[cell.x][y].figure) {
+                this.cells[cell.x][y].available = true
+
+            } else if (this.cells[cell.x][y].figure.collor !== cell.figure.collor) {
+                this.cells[cell.x][y].available = true
                 break
-            }else if(this.cells[cell.x][y].figure.collor===cell.figure.collor){
+            } else if (this.cells[cell.x][y].figure.collor === cell.figure.collor) {
                 break
             }
-            
+
         }
-        
+
     }
 
-    isEmptyDiagonal(cell){
+    isEmptyDiagonal(cell) {
+        let y=cell.y
+        for (let x = cell.x + 1; x <= 7; x++){
+      
+           y++
+           console.log(x,y);
+           if (!this.cells[x][y].figure) {
+            this.cells[x][y].available = true
 
+        } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
+            console.log(this.cells[x][y].figure)
+            this.cells[x][y].available = true
+            break;
+        } else if (this.cells[x][y].figure.collor === cell.figure.collor) {
+            break;
+        }
+        }
+         y=cell.y
+        for (let x = cell.x - 1; x >= 0; x--) {
+            
+            y++
+            console.log('---diaganal down---')
+            
+            if (!this.cells[x][y].figure) {
+                this.cells[x][y].available = true
+
+            } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
+               
+                this.cells[x][y].available = true
+                return
+            } else if (this.cells[x][y].figure.collor === cell.figure.collor) {
+                return
+            }
+
+        }
     }
 
     highlightCells(cell) {
         console.log('---highlightCells---');
         switch (cell.figure.name) {
             case "pawn":
-
-                break;
+                this.isEmptyVertical(cell)
+                this.isEmptyGorisontal(cell)
+                this.isEmptyDiagonal(cell)
 
             case "knight":
 
@@ -170,14 +202,14 @@ class Board {
                 console.log('---rook---');
                 this.isEmptyVertical(cell)
                 this.isEmptyGorisontal(cell)
-                // this.cells = this.cells.map((row) => row.map(oldCell => {
-                //     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
-                //     if (oldCell.x === cell.x || oldCell.y === cell.y) {
-                //         oldCell.available = oldCell.figure ? false : true
-                //     }
-                //     return oldCell
-                // }
-                // ))
+            // this.cells = this.cells.map((row) => row.map(oldCell => {
+            //     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
+            //     if (oldCell.x === cell.x || oldCell.y === cell.y) {
+            //         oldCell.available = oldCell.figure ? false : true
+            //     }
+            //     return oldCell
+            // }
+            // ))
 
             default:
                 break;
@@ -193,12 +225,11 @@ class Board {
     }
     figureReplacement(attackingCell, defensingCell) {
         console.log("---figureReplacement---")
-        this.cells[defensingCell.x][defensingCell.y].removeFigure()
-        this.cells[defensingCell.x][defensingCell.y].addFigure(attackingCell.figure)
-        this.cells[attackingCell.x][attackingCell.y].removeFigure()
-
-        // this.cells.map((row,ind)=>row.map((cell,index)=>
-        // if(row.x=cell)))
+        if (this.cells[defensingCell.x][defensingCell.y].available) {
+            this.cells[defensingCell.x][defensingCell.y].removeFigure()
+            this.cells[defensingCell.x][defensingCell.y].addFigure(attackingCell.figure)
+            this.cells[attackingCell.x][attackingCell.y].removeFigure()
+        }
     }
     availableCells(cell) {
 

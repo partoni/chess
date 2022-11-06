@@ -23,12 +23,13 @@ export const CellComponent = ({cell,click,collor,selected,movement,onBoardHighli
         console.log("over");
     }
     function dropHandler(e,cell){
-        console.log("drop")
+        e.preventDefault()
+        console.log("drop======")
         
         movement(cell)
-        // e.preventDefault()
+       
     }
-    // useEffect(()=>{},[selected])
+    
     return(
         <div 
             className={[style.cell,style[collor],selected===true?style.selected:'',cell.available&&cell.figure?style.available:''].join(" ")} 
@@ -41,15 +42,7 @@ export const CellComponent = ({cell,click,collor,selected,movement,onBoardHighli
             onDoubleClick={onSelected}>
             {cell.available&&!cell.figure?<div className={style.marker}></div>:null}
             {cell.figure
-            ?<img src={cell.figure.logo} 
-                  alt='' 
-                //   onDragStart={(e)=>dragStartHandler(e)}
-                //   onDragLeave={(e)=>dragLeaveHandler(e)}
-                //   onDragOver={(e)=>dragOverHandler(e)}
-                //   onDragEnd={(e)=>dragEndHandler(e)}
-                //   onDrop={(e)=>dropHandler(e)}
-                //   draggable={true}
-                  />
+            ?<img src={cell.figure.logo} alt=''/>
             :null}
         </div>
     )
