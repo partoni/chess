@@ -136,41 +136,59 @@ class Board {
         }
 
     }
-
-    isEmptyDiagonal(cell) {
-        let y=cell.y
-        for (let x = cell.x + 1; x <= 7; x++){
-      
-           y++
-           console.log(x,y);
-           if (!this.cells[x][y].figure) {
+    checkDiagonalCells(x, y, cell) {
+        if (!this.cells[x][y].figure) {
             this.cells[x][y].available = true
 
         } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
             console.log(this.cells[x][y].figure)
             this.cells[x][y].available = true
-            break;
+            return false
         } else if (this.cells[x][y].figure.collor === cell.figure.collor) {
-            break;
+            return false
         }
-        }
-         y=cell.y
-        for (let x = cell.x - 1; x >= 0; x--) {
-            
-            y++
-            console.log('---diaganal down---')
-            
-            if (!this.cells[x][y].figure) {
-                this.cells[x][y].available = true
+        return true
+    }
 
-            } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
-               
-                this.cells[x][y].available = true
-                return
-            } else if (this.cells[x][y].figure.collor === cell.figure.collor) {
-                return
+    isEmptyDiagonalDown(cell) {
+
+        let y = cell.y
+        for (let x = cell.x + 1; x <= 7; x++) {
+            ++y
+            if (y>7||!this.checkDiagonalCells(x, y, cell)) {
+                break;
             }
+        
+        }
+       
+        y = cell.y
+        console.log(y);
+        for (let x = cell.x + 1; x <= 7; x++) {
+            --y
+            console.log('---isEmptyDiagonal  -x+1- ',x,y);
+            if (y<0||!this.checkDiagonalCells(x, y, cell)) {
+                break;
+            }
+        }
+       
+    }
+    isEmptyDiagonalUp(cell) {
+        let y = cell.y
+        for (let x = cell.x - 1; x >= 0; x--) {
+            ++y
+            if (y>7||!this.checkDiagonalCells(x, y, cell)) {
 
+                break;
+            }
+        }
+
+        y = cell.y
+        for (let x = cell.x - 1; x >= 0; x--) {
+            --y
+            console.log('---isEmptyDiagonal  -x-1- ',x,y);
+            if (y<0||!this.checkDiagonalCells(x, y, cell)) {
+                break;
+            }
         }
     }
 
@@ -179,22 +197,28 @@ class Board {
         switch (cell.figure.name) {
             case "pawn":
                 this.isEmptyVertical(cell)
-                this.isEmptyGorisontal(cell)
-                this.isEmptyDiagonal(cell)
+                this.isEmptyDiagonalUp(cell)
 
             case "knight":
 
                 break;
 
             case "king":
-
+                this.isEmptyVertical(cell)
+                this.isEmptyGorisontal(cell)
+                this.isEmptyDiagonal(cell)
                 break;
 
             case "bishop":
-
+                this.isEmptyDiagonalUp(cell)
+                this.isEmptyDiagonalDown(cell)
                 break;
 
             case "queen":
+                this.isEmptyVertical(cell)
+                this.isEmptyGorisontal(cell)
+                this.isEmptyDiagonalUp(cell)
+                this.isEmptyDiagonalDown(cell)
 
                 break;
 
