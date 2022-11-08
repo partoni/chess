@@ -2,10 +2,12 @@ class Figure{
     name;
     collor;
     logo;
+    begin;
     constructor(name,collor,logo){
         this.name=name
         this.collor=collor
         this.logo=logo
+        this.begin=true
     }
 
     canMove(cell){

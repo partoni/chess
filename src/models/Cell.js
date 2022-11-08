@@ -14,6 +14,7 @@ class Cell{
     addFigure(newFigure){
         
         this.figure=newFigure
+        this.figure.begin=false
         // if(newFigure.collor!==this.figure.collor){this.figure=newFigure}
         
     }

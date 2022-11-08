@@ -70,11 +70,12 @@ class Board {
         newBoard.cells = this.cells
         return newBoard
     }
-    isEmptyVertical(cell) {
+    isEmptyVerticalDown(cell,z) {
         console.log('---isEmptyVertical down---')
-
+        let limit=0
         for (let x = cell.x + 1; x <= 7; x++) {
-
+            
+            if(limit===z)break 
 
             if (!this.cells[x][cell.y].figure) {
                 this.cells[x][cell.y].available = true
@@ -86,30 +87,37 @@ class Board {
             } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
                 break;
             }
+            ++limit
+        }}
 
-        }
+        isEmptyVerticalUp(cell,z) {
+        let limit=0
         for (let x = cell.x - 1; x >= 0; x--) {
             console.log('---isEmptyVertical up---')
-
+            
+            if(limit===z)break
             if (!this.cells[x][cell.y].figure) {
+                
                 this.cells[x][cell.y].available = true
 
             } else if (this.cells[x][cell.y].figure.collor !== cell.figure.collor) {
                 console.log(this.cells[x][cell.y].figure)
+                if(cell.figure.name==="pawn")break
                 this.cells[x][cell.y].available = true
                 return
             } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
                 return
             }
-
+            ++limit
         }
     }
 
-    isEmptyGorisontal(cell) {
+    isEmptyGorisontal(cell,z) {
         console.log('---isEmptyGorisontal')
-
+        let limit = 0
         for (let y = cell.y + 1; y <= 7; y++) {
-
+            
+            if(limit===z)break            
             if (!this.cells[cell.x][y].figure) {
                 this.cells[cell.x][y].available = true
 
@@ -120,9 +128,13 @@ class Board {
             } else if (this.cells[cell.x][y].figure.collor === cell.figure.collor) {
                 break
             }
+            ++limit
         }
+        limit=0
         for (let y = cell.y - 1; y >= 0; y--) {
             console.log('---isEmptyGorisontal---')
+            
+            if(limit===z)break 
             if (!this.cells[cell.x][y].figure) {
                 this.cells[cell.x][y].available = true
 
@@ -132,12 +144,13 @@ class Board {
             } else if (this.cells[cell.x][y].figure.collor === cell.figure.collor) {
                 break
             }
-
+            ++limit
         }
 
     }
     checkDiagonalCells(x, y, cell) {
         if (!this.cells[x][y].figure) {
+            if(cell.figure.name==="pawn")return false
             this.cells[x][y].available = true
 
         } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
@@ -150,45 +163,58 @@ class Board {
         return true
     }
 
-    isEmptyDiagonalDown(cell) {
-
+    isEmptyDiagonalDown(cell,z) {
+        let limit=0
         let y = cell.y
         for (let x = cell.x + 1; x <= 7; x++) {
             ++y
-            if (y>7||!this.checkDiagonalCells(x, y, cell)) {
+           
+            if(limit===z)break 
+            if (y>7||!this.checkDiagonalCells(x, y, cell)||limit===z) {
                 break;
             }
-        
+            ++limit
         }
-       
+       limit=0
         y = cell.y
         console.log(y);
         for (let x = cell.x + 1; x <= 7; x++) {
             --y
+            
+            if(limit===z)break 
             console.log('---isEmptyDiagonal  -x+1- ',x,y);
-            if (y<0||!this.checkDiagonalCells(x, y, cell)) {
+            if (y<0||!this.checkDiagonalCells(x, y, cell)||limit===z) {
                 break;
             }
+            ++limit
         }
        
     }
-    isEmptyDiagonalUp(cell) {
+    isEmptyDiagonalUp(cell,z) {
         let y = cell.y
+        let limit=0
         for (let x = cell.x - 1; x >= 0; x--) {
             ++y
-            if (y>7||!this.checkDiagonalCells(x, y, cell)) {
+            
+            if(limit===z)break 
+            if (y>7||!this.checkDiagonalCells(x, y, cell)||limit===z) {
 
                 break;
             }
+            ++limit
         }
 
         y = cell.y
+        limit=0
         for (let x = cell.x - 1; x >= 0; x--) {
             --y
+           
+            if(limit===z)break 
             console.log('---isEmptyDiagonal  -x-1- ',x,y);
-            if (y<0||!this.checkDiagonalCells(x, y, cell)) {
+            if (y<0||!this.checkDiagonalCells(x, y, cell)||limit===z) {
                 break;
             }
+            ++limit
         }
     }
 
@@ -196,17 +222,24 @@ class Board {
         console.log('---highlightCells---');
         switch (cell.figure.name) {
             case "pawn":
-                this.isEmptyVertical(cell)
-                this.isEmptyDiagonalUp(cell)
+                if(cell.figure.begin===true){
+                    this.isEmptyVerticalUp(cell,2)
+                   
+                }
+                this.isEmptyVerticalUp(cell,1)
+                this.isEmptyDiagonalUp(cell,1)
 
             case "knight":
 
                 break;
 
             case "king":
-                this.isEmptyVertical(cell)
-                this.isEmptyGorisontal(cell)
-                this.isEmptyDiagonal(cell)
+                this.isEmptyVerticalUp(cell,1)
+                this.isEmptyVerticalUDown(cell,1)
+                this.isEmptyGorisontal(cell,1)
+                this.isEmptyDiagonalUp(cell,1)
+                this.isEmptyDiagonalDown(cell,1)
+
                 break;
 
             case "bishop":
@@ -215,7 +248,8 @@ class Board {
                 break;
 
             case "queen":
-                this.isEmptyVertical(cell)
+                this.isEmptyVerticalUp(cell)
+                this.isEmptyVerticalDown(cell)
                 this.isEmptyGorisontal(cell)
                 this.isEmptyDiagonalUp(cell)
                 this.isEmptyDiagonalDown(cell)
@@ -224,8 +258,8 @@ class Board {
 
             case "rook":
                 console.log('---rook---');
-                this.isEmptyVertical(cell)
-                this.isEmptyGorisontal(cell)
+                this.isEmptyVerticalUp(cell)
+                this.isEmptyGorisontalDown(cell)
             // this.cells = this.cells.map((row) => row.map(oldCell => {
             //     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
             //     if (oldCell.x === cell.x || oldCell.y === cell.y) {
