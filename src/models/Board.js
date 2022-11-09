@@ -70,12 +70,12 @@ class Board {
         newBoard.cells = this.cells
         return newBoard
     }
-    isEmptyVerticalDown(cell,z) {
+    isEmptyVerticalDown(cell, z) {
         console.log('---isEmptyVertical down---')
-        let limit=0
+        let limit = 0
         for (let x = cell.x + 1; x <= 7; x++) {
-            
-            if(limit===z)break 
+
+            if (limit === z) break
 
             if (!this.cells[x][cell.y].figure) {
                 this.cells[x][cell.y].available = true
@@ -88,21 +88,22 @@ class Board {
                 break;
             }
             ++limit
-        }}
+        }
+    }
 
-        isEmptyVerticalUp(cell,z) {
-        let limit=0
+    isEmptyVerticalUp(cell, z) {
+        let limit = 0
         for (let x = cell.x - 1; x >= 0; x--) {
             console.log('---isEmptyVertical up---')
-            
-            if(limit===z)break
+
+            if (limit === z) break
             if (!this.cells[x][cell.y].figure) {
-                
+
                 this.cells[x][cell.y].available = true
 
             } else if (this.cells[x][cell.y].figure.collor !== cell.figure.collor) {
                 console.log(this.cells[x][cell.y].figure)
-                if(cell.figure.name==="pawn")break
+                if (cell.figure.name === "pawn") break
                 this.cells[x][cell.y].available = true
                 return
             } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
@@ -112,12 +113,12 @@ class Board {
         }
     }
 
-    isEmptyGorisontal(cell,z) {
+    isEmptyGorisontal(cell, z) {
         console.log('---isEmptyGorisontal')
         let limit = 0
         for (let y = cell.y + 1; y <= 7; y++) {
-            
-            if(limit===z)break            
+
+            if (limit === z) break
             if (!this.cells[cell.x][y].figure) {
                 this.cells[cell.x][y].available = true
 
@@ -130,11 +131,11 @@ class Board {
             }
             ++limit
         }
-        limit=0
+        limit = 0
         for (let y = cell.y - 1; y >= 0; y--) {
             console.log('---isEmptyGorisontal---')
-            
-            if(limit===z)break 
+
+            if (limit === z) break
             if (!this.cells[cell.x][y].figure) {
                 this.cells[cell.x][y].available = true
 
@@ -150,7 +151,7 @@ class Board {
     }
     checkDiagonalCells(x, y, cell) {
         if (!this.cells[x][y].figure) {
-            if(cell.figure.name==="pawn")return false
+            if (cell.figure.name === "pawn") return false
             this.cells[x][y].available = true
 
         } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
@@ -163,41 +164,41 @@ class Board {
         return true
     }
 
-    isEmptyDiagonalDown(cell,z) {
-        let limit=0
+    isEmptyDiagonalDown(cell, z) {
+        let limit = 0
         let y = cell.y
         for (let x = cell.x + 1; x <= 7; x++) {
             ++y
-           
-            if(limit===z)break 
-            if (y>7||!this.checkDiagonalCells(x, y, cell)||limit===z) {
+
+            if (limit === z) break
+            if (y > 7 || !this.checkDiagonalCells(x, y, cell) || limit === z) {
                 break;
             }
             ++limit
         }
-       limit=0
+        limit = 0
         y = cell.y
         console.log(y);
         for (let x = cell.x + 1; x <= 7; x++) {
             --y
-            
-            if(limit===z)break 
-            console.log('---isEmptyDiagonal  -x+1- ',x,y);
-            if (y<0||!this.checkDiagonalCells(x, y, cell)||limit===z) {
+
+            if (limit === z) break
+            console.log('---isEmptyDiagonal  -x+1- ', x, y);
+            if (y < 0 || !this.checkDiagonalCells(x, y, cell) || limit === z) {
                 break;
             }
             ++limit
         }
-       
+
     }
-    isEmptyDiagonalUp(cell,z) {
+    isEmptyDiagonalUp(cell, z) {
         let y = cell.y
-        let limit=0
+        let limit = 0
         for (let x = cell.x - 1; x >= 0; x--) {
             ++y
-            
-            if(limit===z)break 
-            if (y>7||!this.checkDiagonalCells(x, y, cell)||limit===z) {
+
+            if (limit === z) break
+            if (y > 7 || !this.checkDiagonalCells(x, y, cell) || limit === z) {
 
                 break;
             }
@@ -205,40 +206,76 @@ class Board {
         }
 
         y = cell.y
-        limit=0
+        limit = 0
         for (let x = cell.x - 1; x >= 0; x--) {
             --y
-           
-            if(limit===z)break 
-            console.log('---isEmptyDiagonal  -x-1- ',x,y);
-            if (y<0||!this.checkDiagonalCells(x, y, cell)||limit===z) {
+
+            if (limit === z) break
+            console.log('---isEmptyDiagonal  -x-1- ', x, y);
+            if (y < 0 || !this.checkDiagonalCells(x, y, cell) || limit === z) {
                 break;
             }
             ++limit
         }
+    }
+    movementKnight(cell) {
+
+        // let coordinates=[]
+        console.log("--movementKnight--");
+        console.log("cell.x=" + cell.x + "---------cell.y=" + cell.y);
+        for (let x = cell.x - 2; x <= cell.x + 2 ; x++) {
+            console.log(x);
+
+            if (x === cell.x - 2 || x === cell.x + 2) {
+                console.log("(x===cell.x-2||x===cell.x+2)");
+                this.cells[x]?.map((oldCell) => {
+                   if((oldCell.y === cell.y + 1 || oldCell.y === cell.y - 1)&&oldCell.figure?.collor!==cell.figure.collor)  oldCell.available = true
+                    return oldCell
+                }
+                )
+
+            }
+            if (x === cell.x - 1 || x === cell.x + 1) {
+                this.cells[x]?.map((oldCell) => {
+                    if((oldCell.y === cell.y + 2 || oldCell.y === cell.y - 2)&&oldCell.figure?.collor!==cell.figure.collor)  oldCell.available = true
+                     return oldCell
+                 }
+                 )
+            }
+
+        }
+        // for(let x=cell.x-2;x<=cell.x+2;x++){
+        //     console.log("for------------");
+        //     if(x=cell.x)continue
+        // if(x===cell.x-2||x===cell.x+2){
+        //     this.cells[x].map((oldCell)=>oldCell.y===(cell.y+1||cell.y-1)?oldCell.available=true:oldCell)
+        // }
+        // this.cells[x].map((oldCell)=>oldCell.y===(cell.y+2||cell.y-2)?oldCell.available=true:oldCell)
+        // }
     }
 
     highlightCells(cell) {
         console.log('---highlightCells---');
         switch (cell.figure.name) {
             case "pawn":
-                if(cell.figure.begin===true){
-                    this.isEmptyVerticalUp(cell,2)
-                   
+                if (cell.figure.begin === true) {
+                    this.isEmptyVerticalUp(cell, 2)
+
                 }
-                this.isEmptyVerticalUp(cell,1)
-                this.isEmptyDiagonalUp(cell,1)
+                this.isEmptyVerticalUp(cell, 1)
+                this.isEmptyDiagonalUp(cell, 1)
 
             case "knight":
 
+                this.movementKnight(cell)
                 break;
 
             case "king":
-                this.isEmptyVerticalUp(cell,1)
-                this.isEmptyVerticalUDown(cell,1)
-                this.isEmptyGorisontal(cell,1)
-                this.isEmptyDiagonalUp(cell,1)
-                this.isEmptyDiagonalDown(cell,1)
+                this.isEmptyVerticalUp(cell, 1)
+                this.isEmptyVerticalUDown(cell, 1)
+                this.isEmptyGorisontal(cell, 1)
+                this.isEmptyDiagonalUp(cell, 1)
+                this.isEmptyDiagonalDown(cell, 1)
 
                 break;
 
