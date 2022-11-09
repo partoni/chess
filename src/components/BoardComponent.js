@@ -12,6 +12,11 @@ export const BoardComponent = ({ board, setBoard }) => {
             board.deleteHighLight()
 
         } else {
+            console.log(cell.x+"---"+selected?.x+" || "+cell.y+ "----" +selected?.y);
+            if (cell.x !== selected?.x || cell.y !== selected?.y) {
+                setSelected(null)
+                board.deleteHighLight()
+            }
             setSelected(cell)
             board.highlightCells(cell)
         }
@@ -19,7 +24,7 @@ export const BoardComponent = ({ board, setBoard }) => {
         setBoard(newBoard)
     }
     const movement = (defensingCell) => {
-        
+
         board.figureReplacement(selected, defensingCell)
         setSelected(null)
         board.deleteHighLight()
@@ -31,8 +36,8 @@ export const BoardComponent = ({ board, setBoard }) => {
     const boardHighlight = (cell) => {
         if (selected && cell.x === selected.x && cell.y === selected.y) {
             board.highlightCells(cell)
-            
-        }else if(!selected){
+
+        } else if (!selected) {
             setSelected(cell)
         }
         const newBoard = board.getCopyBoard()
@@ -42,7 +47,7 @@ export const BoardComponent = ({ board, setBoard }) => {
 
 
     return (
-        <>
+        <div className='board'>
             {board.cells.map((row, index) => <React.Fragment key={index}>
                 {row.map((cell, ind) =>
                     (ind + index) % 2
@@ -67,6 +72,6 @@ export const BoardComponent = ({ board, setBoard }) => {
             </React.Fragment>)
             }
 
-        </>
+        </div>
     )
 }

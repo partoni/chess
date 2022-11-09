@@ -82,6 +82,7 @@ class Board {
 
             } else if (this.cells[x][cell.y].figure.collor !== cell.figure.collor) {
                 console.log(this.cells[x][cell.y].figure)
+                if (cell.figure.name === "pawn") break
                 this.cells[x][cell.y].available = true
                 break;
             } else if (this.cells[x][cell.y].figure.collor === cell.figure.collor) {
@@ -153,7 +154,7 @@ class Board {
         if (!this.cells[x][y].figure) {
             if (cell.figure.name === "pawn") return false
             this.cells[x][y].available = true
-
+            
         } else if (this.cells[x][y].figure.collor !== cell.figure.collor) {
             console.log(this.cells[x][y].figure)
             this.cells[x][y].available = true
@@ -183,7 +184,7 @@ class Board {
             --y
 
             if (limit === z) break
-            console.log('---isEmptyDiagonal  -x+1- ', x, y);
+            console.log('---isEmptyDiagonalDown  -x+1- ', x, y);
             if (y < 0 || !this.checkDiagonalCells(x, y, cell) || limit === z) {
                 break;
             }
@@ -223,13 +224,13 @@ class Board {
         // let coordinates=[]
         console.log("--movementKnight--");
         console.log("cell.x=" + cell.x + "---------cell.y=" + cell.y);
-        for (let x = cell.x - 2; x <= cell.x + 2 ; x++) {
+        for (let x = cell.x - 2; x <= cell.x + 2; x++) {
             console.log(x);
 
             if (x === cell.x - 2 || x === cell.x + 2) {
                 console.log("(x===cell.x-2||x===cell.x+2)");
                 this.cells[x]?.map((oldCell) => {
-                   if((oldCell.y === cell.y + 1 || oldCell.y === cell.y - 1)&&oldCell.figure?.collor!==cell.figure.collor)  oldCell.available = true
+                    if ((oldCell.y === cell.y + 1 || oldCell.y === cell.y - 1) && oldCell.figure?.collor !== cell.figure.collor) oldCell.available = true
                     return oldCell
                 }
                 )
@@ -237,10 +238,10 @@ class Board {
             }
             if (x === cell.x - 1 || x === cell.x + 1) {
                 this.cells[x]?.map((oldCell) => {
-                    if((oldCell.y === cell.y + 2 || oldCell.y === cell.y - 2)&&oldCell.figure?.collor!==cell.figure.collor)  oldCell.available = true
-                     return oldCell
-                 }
-                 )
+                    if ((oldCell.y === cell.y + 2 || oldCell.y === cell.y - 2) && oldCell.figure?.collor !== cell.figure.collor) oldCell.available = true
+                    return oldCell
+                }
+                )
             }
 
         }
@@ -258,13 +259,23 @@ class Board {
         console.log('---highlightCells---');
         switch (cell.figure.name) {
             case "pawn":
-                if (cell.figure.begin === true) {
-                    this.isEmptyVerticalUp(cell, 2)
+                if (cell.figure.collor === "white") {
+                    if (cell.figure.begin === true) {
+                        this.isEmptyVerticalUp(cell, 2)
 
+                    } else { this.isEmptyVerticalUp(cell, 1) }
+
+                    this.isEmptyDiagonalUp(cell, 1)
+                }else{
+                    if (cell.figure.begin === true) {
+                        this.isEmptyVerticalDown(cell, 2)
+
+                    } else { this.isEmptyVerticalDown(cell, 1) }
+
+                    this.isEmptyDiagonalDown(cell, 1)
                 }
-                this.isEmptyVerticalUp(cell, 1)
-                this.isEmptyDiagonalUp(cell, 1)
 
+                break;
             case "knight":
 
                 this.movementKnight(cell)
@@ -272,7 +283,7 @@ class Board {
 
             case "king":
                 this.isEmptyVerticalUp(cell, 1)
-                this.isEmptyVerticalUDown(cell, 1)
+                this.isEmptyVerticalDown(cell, 1)
                 this.isEmptyGorisontal(cell, 1)
                 this.isEmptyDiagonalUp(cell, 1)
                 this.isEmptyDiagonalDown(cell, 1)
@@ -297,15 +308,15 @@ class Board {
                 console.log('---rook---');
                 this.isEmptyVerticalUp(cell)
                 this.isEmptyGorisontalDown(cell)
-            // this.cells = this.cells.map((row) => row.map(oldCell => {
-            //     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
-            //     if (oldCell.x === cell.x || oldCell.y === cell.y) {
-            //         oldCell.available = oldCell.figure ? false : true
-            //     }
-            //     return oldCell
-            // }
-            // ))
-
+                // this.cells = this.cells.map((row) => row.map(oldCell => {
+                //     // oldCell.x===cell.x&&oldCell.y===cell.y?oldCell.available=true:false
+                //     if (oldCell.x === cell.x || oldCell.y === cell.y) {
+                //         oldCell.available = oldCell.figure ? false : true
+                //     }
+                //     return oldCell
+                // }
+                // ))
+                break;
             default:
                 break;
 

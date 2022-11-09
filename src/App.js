@@ -26,12 +26,12 @@ function App() {
     <div className="App">
       <header className="App-header">
        chessboard
-        <div className='board'>
+        <div >
         <BoardComponent 
         board = {board}
         setBoard={setBoard}/>
         </div>
-        <button>расставить</button>
+        <button onClick={restart}>расставить</button>
       </header>
     </div>
   );
