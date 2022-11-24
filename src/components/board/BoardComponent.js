@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import { CellComponent } from './cell/CellComponent'
+import React, { useEffect, useState } from 'react'
+import { CellComponent } from '../cell/CellComponent'
 import "./BoardComponentStyle.css"
 
-export const BoardComponent = ({ board, setBoard }) => {
+export const BoardComponent = ({ board, setBoard, restart }) => {
+    console.log("BoardComponent");
     const [selected, setSelected] = useState(null)
+    
     console.log("---board---");
     const click = (cell) => {
         console.log("---click-----");
@@ -47,6 +49,8 @@ export const BoardComponent = ({ board, setBoard }) => {
 
 
     return (
+        <>
+
         <div className='board'>
             {board.cells.map((row, index) => <React.Fragment key={index}>
                 {row.map((cell, ind) =>
@@ -71,7 +75,9 @@ export const BoardComponent = ({ board, setBoard }) => {
                 }
             </React.Fragment>)
             }
-
+           
         </div>
+        <div><button onClick={()=>restart()}>расставить</button></div>
+        </>
     )
 }

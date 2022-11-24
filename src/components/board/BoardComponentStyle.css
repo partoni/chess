@@ -30,7 +30,7 @@
     background-color: rgb(145, 176, 232);
 } */
 .board{
-    border: 1px solid #000;
+    
     width: calc(8*70px);
     height: calc(8*70px);
     display: flex;
